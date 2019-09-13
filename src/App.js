@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-import Form                from './components/Form';
-import Appointment         from './components/Appointment';
+import React, { useState, useEffect } from 'react';
+import Form                           from './components/Form';
+import Appointment                    from './components/Appointment';
 
 function App() {
-  const [medicalAppointments, setMedicalAppointments] = useState([]);
+  let initialMedicalAppointments = JSON.parse(localStorage.getItem("medicalAppointments"));
+
+  if(!initialMedicalAppointments) {
+    initialMedicalAppointments = [];
+  }
+
+  const [medicalAppointments, setMedicalAppointments] = useState(initialMedicalAppointments);
 
   const addMedicalAppointments = appointment => {
     const newAppointment = [...medicalAppointments, appointment];
@@ -17,6 +23,17 @@ function App() {
     newAppointment.splice(index, 1);
     setMedicalAppointments(newAppointment)
   }
+
+  useEffect(
+    () => {
+      let initialMedicalAppointments = JSON.parse(localStorage.getItem("medicalAppointments"));
+
+      if(initialMedicalAppointments) {
+        localStorage.setItem("medicalAppointments", JSON.stringify(medicalAppointments));
+      } else {
+        localStorage.setItem("medicalAppointments", JSON.stringify([]));
+      }
+    }, [medicalAppointments]);
 
   const title = medicalAppointments.length ? "Manage appointments" : "There are no appointments.";
 
