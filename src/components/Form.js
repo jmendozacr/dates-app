@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Form() {
+function Form({ addMedicalAppointments }) {
   const [appointment, setAppointment] = useState({
     pet: "",
     owner: "",
@@ -16,14 +16,18 @@ function Form() {
       [e.target.name]: e.target.value
     });
   }
-  
-  console.log(appointment);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    addMedicalAppointments(appointment);
+  }
 
   return (
     <>
       <h2>create appointment</h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <label>Pet Name</label>
         <input
           type="text"
