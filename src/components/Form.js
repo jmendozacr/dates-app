@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
 function Form({ addMedicalAppointments }) {
-  const [appointment, setAppointment] = useState({
+  const initialState = {
     pet: "",
     owner: "",
     date: "",
     time: "",
     description: "",
-  });
+  }
+
+  const [appointment, setAppointment] = useState(initialState);
 
   const handleChange = (e) => {
-    // console.log(e.target);
     setAppointment({
       ...appointment,
       [e.target.name]: e.target.value
@@ -21,6 +22,7 @@ function Form({ addMedicalAppointments }) {
     e.preventDefault();
 
     addMedicalAppointments(appointment);
+    setAppointment(initialState);
   }
 
   return (
@@ -35,6 +37,7 @@ function Form({ addMedicalAppointments }) {
           className="u-full-width"
           placeholder="Pet Name"
           onChange={handleChange}
+          value={appointment.pet}
         />
 
         <label>Owner Name</label>
@@ -44,16 +47,17 @@ function Form({ addMedicalAppointments }) {
           className="u-full-width"
           placeholder="Owner Name"
           onChange={handleChange}
+          value={appointment.owner}
         />
 
         <label>Date</label>
-        <input type="date" className="u-full-width" name="date" onChange={handleChange} />
+        <input type="date" className="u-full-width" name="date" onChange={handleChange} value={appointment.date} />
 
         <label>Time</label>
-        <input type="time" className="u-full-width" name="time" onChange={handleChange} />
+        <input type="time" className="u-full-width" name="time" onChange={handleChange} value={appointment.time} />
 
         <label>Symptom</label>
-        <textarea className="u-full-width" name="description" onChange={handleChange}></textarea>
+        <textarea className="u-full-width" name="description" onChange={handleChange} value={appointment.description}></textarea>
 
         <button type="submit" className="button-primary u-full-width">
           Agregar
